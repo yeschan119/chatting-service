@@ -72,28 +72,28 @@
           }
       }
       ```
-    + create user connections hub to use pending message until logging in users
-      + ```
-        private static ConcurrentDictionary<string, UserConnection> UserConnections = new ConcurrentDictionary<string, UserConnection>();
-        private static ConcurrentDictionary<string, PendingMessage> PendingMessages = new ConcurrentDictionary<string, PendingMessage>();
+  + create user connections hub to use pending message until logging in users
+    + ```
+      private static ConcurrentDictionary<string, UserConnection> UserConnections = new ConcurrentDictionary<string, UserConnection>();
+      private static ConcurrentDictionary<string, PendingMessage> PendingMessages = new ConcurrentDictionary<string, PendingMessage>();
   
-        public Task RegisterUser(string userName)
-        {
-            // save new user to UserConnections pool
-            UserConnections[Context.ConnectionId] = new UserConnection
-            {
-                UserName = userName,
-                Status = "New"
-            };
-    
-            // send unread messages that arrived when user was off line
-            if (PendingMessages.TryRemove(userName, out var pendingMessage))
-            {
-                foreach (var message in pendingMessage.Messages)
-                {
-                    Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", 1, message, pendingMessage.Status);
-                }
-            }
-            return Task.CompletedTask;
-        }
-      ```
+      public Task RegisterUser(string userName)
+      {
+          // save new user to UserConnections pool
+          UserConnections[Context.ConnectionId] = new UserConnection
+          {
+              UserName = userName,
+              Status = "New"
+          };
+  
+          // send unread messages that arrived when user was off line
+          if (PendingMessages.TryRemove(userName, out var pendingMessage))
+          {
+              foreach (var message in pendingMessage.Messages)
+              {
+                  Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", 1, message, pendingMessage.Status);
+              }
+          }
+          return Task.CompletedTask;
+      }
+    ```
