@@ -26,14 +26,14 @@
 # Step1
   + Initial Setup
     + Angular : create new component
-      + `ng generate component Chat`
-      + `npm install @microsoft/signalr`
+      + ```ng generate component Chat```
+      + ```npm install @microsoft/signalr```
     + .Net : create a chat hub class & add signalR service
-      + `dotnet add package Microsoft.AspNetCore.SignalR`
-      + `dotnet new class -n ChatHub`
+      + ```dotnet add package Microsoft.AspNetCore.SignalR```
+      + ```dotnet new class -n ChatHub```
       + ``` public void ConfigureServices(IServiceCollection services)
           {
-              services.AddSignalR(); // SignalR 서비스 등록
+              services.AddSignalR();
           }
           
           public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -44,3 +44,56 @@
               });
           }
         ```
+# Step2
+  + Set up the .Net backend and SignalR Hub
+  + ```
+      using Microsoft.AspNetCore.SignalR;
+      using System.Threading.Tasks;
+
+      namespace YourNamespace.Hubs
+      {
+          public class ChatHub : Hub
+          {
+              public async Task SendMessage(string user, string message)
+              {
+                  await Clients.All.SendAsync("ReceiveMessage", user, message);
+              }
+  
+              public override async Task OnConnectedAsync()
+              {
+                  await base.OnConnectedAsync();
+                  await Clients.Caller.SendAsync("Notify", "Welcome to the chat!");
+              }
+      
+              public override async Task OnDisconnectedAsync(System.Exception exception)
+              {
+                  await base.OnDisconnectedAsync(exception);
+              }
+          }
+      }
+      ```
+    + create user connections hub to use pending message until logging in users
+      + ```
+        private static ConcurrentDictionary<string, UserConnection> UserConnections = new ConcurrentDictionary<string, UserConnection>();
+        private static ConcurrentDictionary<string, PendingMessage> PendingMessages = new ConcurrentDictionary<string, PendingMessage>();
+  
+        public Task RegisterUser(string userName)
+        {
+            // save new user to UserConnections pool
+            UserConnections[Context.ConnectionId] = new UserConnection
+            {
+                UserName = userName,
+                Status = "New"
+            };
+    
+            // send unread messages that arrived when user was off line
+            if (PendingMessages.TryRemove(userName, out var pendingMessage))
+            {
+                foreach (var message in pendingMessage.Messages)
+                {
+                    Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", 1, message, pendingMessage.Status);
+                }
+            }
+            return Task.CompletedTask;
+        }
+      ```
