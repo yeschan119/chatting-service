@@ -70,8 +70,7 @@
                     await base.OnDisconnectedAsync(exception);
                 }
             }
-        }
-        ```
+        }```
   + create user connections hub to use pending message until logging in users
     + ```
       private static ConcurrentDictionary<string, UserConnection> UserConnections = new ConcurrentDictionary<string, UserConnection>();
@@ -95,5 +94,4 @@
               }
           }
           return Task.CompletedTask;
-      }
-    ```
+      }```
