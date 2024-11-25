@@ -43,8 +43,51 @@
                   endpoints.MapHub<ChatHub>("/chathub"); // `/chathub` 경로에 ChatHub 매핑
               });
           }
-        ```
 # Step2
+  + Frontend(Angular)
+    + create chat module
+      + ``` ng generate module chat ```
+    + declararations in chat.modult.ts
+        + ```@NgModule({ declarations: [KokomoChatComponent, KokomoSubChatComponent], imports: [...]})```
+    + create chat service
+      + ``` ng generate service chat --skip-tests```
+      + ```
+          super(authService, http, 'Chats', route, router, commonUtilService);
+          this.hubConnection = new signalR.HubConnectionBuilder()
+          .withUrl(environment.serverUrl + 'chathub') // .NET backend SignalR hub URL
+          .withAutomaticReconnect()
+          .build();
+
+          import { Injectable } from '@angular/core';
+          
+          @Injectable({
+            providedIn: 'root'
+          })
+          export class ChatService {
+            private hubConnection: signalR.HubConnection;
+          
+            constructor() {
+              this.hubConnection = new signalR.HubConnectionBuilder()
+                .withUrl('https://your-backend-url/chathub') // Replace with your backend URL
+                .build();
+            }
+          
+            startConnection(): void {
+              this.hubConnection
+                .start()
+                .then(() => console.log('SignalR connection started'))
+                .catch(err => console.error('SignalR connection error: ', err));
+            }
+          
+            sendMessage(message: string): void {
+              this.hubConnection.invoke('SendMessage', message)
+                .catch(err => console.error('Message sending failed: ', err));
+            }
+          
+            onReceiveMessage(callback: (message: string) => void): void {
+              this.hubConnection.on('ReceiveMessage', callback);
+            }
+          }
   + Set up the .Net backend and SignalR Hub
     + ```
         using Microsoft.AspNetCore.SignalR;
@@ -70,7 +113,7 @@
                     await base.OnDisconnectedAsync(exception);
                 }
             }
-        }```
+        }
   + create user connections hub to use pending message until logging in users
     + ```
       private static ConcurrentDictionary<string, UserConnection> UserConnections = new ConcurrentDictionary<string, UserConnection>();
@@ -94,4 +137,4 @@
               }
           }
           return Task.CompletedTask;
-      }```
+      }
