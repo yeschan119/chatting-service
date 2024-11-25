@@ -138,3 +138,71 @@
           }
           return Task.CompletedTask;
       }
+# Step4 - message persistence
+  + Design the database schema for fetching chatting list & storing messages
+    + Users: To store user information.
+    + Chats: To store chat sessions or groups.
+    + Messages: To store chat messages.
+      + ```
+          CREATE TABLE Messages (
+          MessageId BIGINT AUTO_INCREMENT PRIMARY KEY,
+          ChatId INT NOT NULL,
+          SenderId INT NOT NULL,
+          MessageText TEXT,
+          MessageType ENUM('text', 'image', 'video', 'file') DEFAULT 'text',
+          SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (ChatId) REFERENCES Chats(ChatId),
+          FOREIGN KEY (SenderId) REFERENCES Users(UserId)
+        );
+    + ChatParticipants: To link users with chat sessions.
+    + MessageStatus: To track message read/unread status(optional).
+  + Implement API for fetching & Storing
+    + Frontend
+      + ```
+          async getChatUser(request: SearchRequest, apiName: string = 'fetchChatList'): Promise<Chat[]> {
+          if (this.chatItemsLoaded) {
+              return this.chatItems;
+          }
+          return await this.httpPost(apiName, request).then(result => {
+              if (result != null && result.resultCode == ResultCodeType.Success) {
+                  this.chatItems = result.list.datas;   // for caching
+                  this.chatItemsLoaded = true;   // for caching
+                  return this.chatItems;
+              }
+              return null;
+          });
+        }
+      + ```
+        async saveChat(chat: Chat): Promise<ResultCodeType> {
+          let response = await this.httpPost('saveChat', chat, 'Save successfully')
+          return response.resultCode;
+        }
+    + Backend
+      + create chat model
+        +  ``` ng generate class models/chat --type=model ```
+      +  create chat controller
+        + ``` dotnet generate controller ChatsController ```
+        + ```
+          [HttpPost]
+          [Route("fetchChatList")]
+          public IActionResult telehealthChat([FromBody] SearchRequest request)
+          {
+              TelehealthChat[] users;
+              IQueryable<View_UserList> query = _readContext.View_UserList.AsQueryable();
+              query = query.Where(x => x.dbId == DB);
+              users = query
+                          .Select(user => new TelehealthChat()
+                          {
+                              Id = user.Id,
+                              Name = user.Name,
+                              Initial = getInitials(user.Name),
+                              Role = user.RoleName,
+                              LastMessage = "",
+                              Count = 0,
+                              Status = "New",
+                              Time = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss"),
+                          })
+                          .ToArray();
+              var result = new BaseResult<TelehealthChat>(ResultCodeType.Success, new BaseListView<TelehealthChat>(users));
+              return new ObjectResult(result);
+          }
