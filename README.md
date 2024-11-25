@@ -25,5 +25,22 @@
   + M5: Deployment
 # Step1
   + Initial Setup
-    + Angular
+    + Angular : create new component
       + `ng generate component Chat`
+      + `npm install @microsoft/signalr`
+    + .Net : create a chat hub class & add signalR service
+      + `dotnet add package Microsoft.AspNetCore.SignalR`
+      + `dotnet new class -n ChatHub`
+      + ``` public void ConfigureServices(IServiceCollection services)
+          {
+              services.AddSignalR(); // SignalR 서비스 등록
+          }
+          
+          public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+          {
+              app.UseEndpoints(endpoints =>
+              {
+                  endpoints.MapHub<ChatHub>("/chathub"); // `/chathub` 경로에 ChatHub 매핑
+              });
+          }
+        ```
