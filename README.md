@@ -23,3 +23,7 @@
     + Write unit and integration tests
     + Debug and optimize performance
   + M5: Deployment
+# Step1
+  + Initial Setup
+    + Angular
+      + `ng generate component Chat`
