@@ -88,6 +88,8 @@
               this.hubConnection.on('ReceiveMessage', callback);
             }
           }
+    + code html, typescript, css to make a beautiful, flexible, responsive design
+      + html : make chatting list, message window, message input using `ng-container` `mat-sidenav-container`, `mat-sidenav` `mat-form-field` `mat-label` ... tags
   + Set up the .Net backend and SignalR Hub
     + ```
         using Microsoft.AspNetCore.SignalR;
@@ -185,9 +187,9 @@
         + ```
           [HttpPost]
           [Route("fetchChatList")]
-          public IActionResult telehealthChat([FromBody] SearchRequest request)
+          public IActionResult Chat([FromBody] SearchRequest request)
           {
-              TelehealthChat[] users;
+              Chat[] users;
               IQueryable<View_UserList> query = _readContext.View_UserList.AsQueryable();
               query = query.Where(x => x.dbId == DB);
               users = query
@@ -195,8 +197,7 @@
                           {
                               Id = user.Id,
                               Name = user.Name,
-                              Initial = getInitials(user.Name),
-                              Role = user.RoleName,
+                              Initial = '',
                               LastMessage = "",
                               Count = 0,
                               Status = "New",
