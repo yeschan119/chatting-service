@@ -46,32 +46,32 @@
         ```
 # Step2
   + Set up the .Net backend and SignalR Hub
-  + ```
-      using Microsoft.AspNetCore.SignalR;
-      using System.Threading.Tasks;
-
-      namespace YourNamespace.Hubs
-      {
-          public class ChatHub : Hub
-          {
-              public async Task SendMessage(string user, string message)
-              {
-                  await Clients.All.SendAsync("ReceiveMessage", user, message);
-              }
+    + ```
+        using Microsoft.AspNetCore.SignalR;
+        using System.Threading.Tasks;
   
-              public override async Task OnConnectedAsync()
-              {
-                  await base.OnConnectedAsync();
-                  await Clients.Caller.SendAsync("Notify", "Welcome to the chat!");
-              }
-      
-              public override async Task OnDisconnectedAsync(System.Exception exception)
-              {
-                  await base.OnDisconnectedAsync(exception);
-              }
-          }
-      }
-      ```
+        namespace YourNamespace.Hubs
+        {
+            public class ChatHub : Hub
+            {
+                public async Task SendMessage(string user, string message)
+                {
+                    await Clients.All.SendAsync("ReceiveMessage", user, message);
+                }
+    
+                public override async Task OnConnectedAsync()
+                {
+                    await base.OnConnectedAsync();
+                    await Clients.Caller.SendAsync("Notify", "Welcome to the chat!");
+                }
+        
+                public override async Task OnDisconnectedAsync(System.Exception exception)
+                {
+                    await base.OnDisconnectedAsync(exception);
+                }
+            }
+        }
+        ```
   + create user connections hub to use pending message until logging in users
     + ```
       private static ConcurrentDictionary<string, UserConnection> UserConnections = new ConcurrentDictionary<string, UserConnection>();
