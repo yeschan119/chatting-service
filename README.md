@@ -16,10 +16,8 @@
 # Project Result
   <img width="462" alt="Screenshot 2024-11-25 at 15 44 02" src="https://github.com/user-attachments/assets/b2e2ef59-7e07-467a-83d7-d4731b43f5bb"> |
   <img width="462" alt="Screenshot 2024-11-25 at 15 44 30" src="https://github.com/user-attachments/assets/cffeba69-612c-4215-b957-c547af83d02f">
-
   <img width="462" alt="Screenshot 2024-11-25 at 15 44 45" src="https://github.com/user-attachments/assets/48440b47-147f-4b0c-b032-c0b0ca209068"> |
   <img width="462" alt="Screenshot 2024-11-25 at 15 44 55" src="https://github.com/user-attachments/assets/55828f5c-b87b-4a19-a429-99063545ece4">
-
   <img width="462" alt="Screenshot 2024-11-25 at 15 45 15" src="https://github.com/user-attachments/assets/0b1185cd-ffef-4c40-ba7a-9fed3c22f0be"> |
   <img width="462" alt="Screenshot 2024-11-25 at 15 46 04" src="https://github.com/user-attachments/assets/c31e12d8-5dcc-47ef-8165-40624d3a4eba">
 # Milestones
