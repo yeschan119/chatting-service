@@ -18,7 +18,9 @@
 
   <img width="462" alt="Screenshot 2024-11-25 at 15 45 15" src="https://github.com/user-attachments/assets/0b1185cd-ffef-4c40-ba7a-9fed3c22f0be"> |
   <img width="462" alt="Screenshot 2024-11-25 at 15 46 04" src="https://github.com/user-attachments/assets/c31e12d8-5dcc-47ef-8165-40624d3a4eba">
-
+# Chat Service Diagram
+![Screenshot 2024-11-26 at 10 38 19](https://github.com/user-attachments/assets/b43c1f01-3d8a-43e3-ac48-4b08dbd52e9f)
+![Screenshot 2024-11-26 at 10 38 55](https://github.com/user-attachments/assets/eb25ce9f-b199-4116-81c1-2802c926b705)
 # Milestones
   + M1: Initial Setup
     + Create an Angular project and install the SignalR client
@@ -33,7 +35,7 @@
     + Write unit and integration tests
     + Debug and optimize performance
   + M5: Deployment
-# Step1
+# M1
   + Initial Setup
     + Angular : create new component
       + ```ng generate component Chat```
@@ -53,7 +55,7 @@
                   endpoints.MapHub<ChatHub>("/chathub"); // `/chathub` 경로에 ChatHub 매핑
               });
           }
-# Step2
+# M2
   + Frontend(Angular)
     + create chat module
       + ``` ng generate module chat ```
@@ -147,7 +149,7 @@
           }
           return Task.CompletedTask;
       }
-# Step4 - message persistence
+# M3 - message persistence
   + Design the database schema for fetching chatting list & storing messages
     + Users: To store user information.
     + Chats: To store chat sessions or groups.
@@ -214,3 +216,4 @@
               var result = new BaseResult<Chat>(ResultCodeType.Success, new BaseListView<Chat>(users));
               return new ObjectResult(result);
           }
+# M4 - Test & Debug
