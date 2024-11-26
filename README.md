@@ -1,8 +1,8 @@
 # puppose📢
   + realtime chatting service
     + between charge nurse and school nurses to take care of students
-# company🐘
-  + Kokomo24/7 Solution Inc
+# company🐘 & department🍕
+  + Kokomo24/7 Solution Inc & R&D
 # member🧑‍💻
   Solo project
 # platform & framework
