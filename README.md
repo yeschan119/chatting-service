@@ -50,7 +50,7 @@
         {
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ChatHub>("/chathub"); // `/chathub` 경로에 ChatHub 매핑
+                endpoints.MapHub<ChatHub>("/chathub"); // mapping to this path `/chathub`
             });
         }
 # M2 - Core Chat Functionality
