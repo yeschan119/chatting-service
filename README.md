@@ -11,8 +11,9 @@
   + Server - AWS RDS
   + Database - MySQL
 # Chat Service Diagram
-<img width="400" height="300" alt="Screenshot 2024-11-25 at 15 44 02" src="https://github.com/user-attachments/assets/b43c1f01-3d8a-43e3-ac48-4b08dbd52e9f">
-<img width="400" height="300" alt="Screenshot 2024-11-25 at 15 44 30" src="https://github.com/user-attachments/assets/eb25ce9f-b199-4116-81c1-2802c926b705">
+<img width="500" height="400" alt="Screenshot 2024-11-25 at 15 44 02" src="https://github.com/user-attachments/assets/b43c1f01-3d8a-43e3-ac48-4b08dbd52e9f">
+<img width="500" height="400" alt="Screenshot 2024-11-25 at 15 44 30" src="https://github.com/user-attachments/assets/eb25ce9f-b199-4116-81c1-2802c926b705">
+---
 # Project Result
   <img width="300" height="500" alt="Screenshot 2024-11-25 at 15 44 02" src="https://github.com/user-attachments/assets/b2e2ef59-7e07-467a-83d7-d4731b43f5bb"> |
   <img width="300" height="500" alt="Screenshot 2024-11-25 at 15 44 30" src="https://github.com/user-attachments/assets/cffeba69-612c-4215-b957-c547af83d02f">
